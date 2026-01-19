@@ -1,4 +1,6 @@
-import type { Appointment, AppointmentStatus } from "../generated/prisma/index.js";
+import type { Appointment } from "../generated/prisma/index.js";
+
+export type AppointmentStatus = "scheduled" | "canceled" | "rescheduled";
 
 export interface AppointmentWhereParams {
     status?: AppointmentStatus
