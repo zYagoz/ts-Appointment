@@ -3,7 +3,7 @@ import { prisma } from "../../database/index.js";
 import { CreateDoctorsAttributes, DoctorsReposityors } from '../DoctorsRepository.js';
 
 export class PrismaDoctorsRepository implements DoctorsReposityors {
-    find(): Promise<Doctors> {
+    find(): Promise<Doctors[]> {
         return prisma.doctors.findMany()
     }
 
