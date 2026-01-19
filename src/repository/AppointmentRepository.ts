@@ -32,8 +32,9 @@ export interface CreateAppointmenteAttributes {
 }
 
 export interface AppointmentRepository {
-    find: () => Promise<Appointment[]>
+    find: (params: FindAppointmentsParams) => Promise<Appointment[]>
     findById: (id: number) => Promise<Appointment>
+    count: (where: AppointmentWhereParams) => Promise<number>
     create: (attributes: CreateAppointmenteAttributes) => Promise<Appointment>
     updateById: (id: number, attributes: Partial<CreateAppointmenteAttributes>) => Promise<Appointment | null>
     deleteById: (id: number) => Promise<Appointment | null> 
