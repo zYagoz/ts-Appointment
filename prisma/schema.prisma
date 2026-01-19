@@ -10,8 +10,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
@@ -21,33 +21,54 @@ enum AppointmentStatus {
   rescheduled
 }
 
-model Appointment{
-  id Int @id @default(autoincrement())
-  startAt DateTime
-  status AppointmentStatus @default(scheduled)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  doctorId Int
-  userId Int
-  user Users @relation(fields: [userId], references: [id])
-  doctor Doctors @relation(fields: [doctorId], references: [id])
+model Appointment {
+  id        Int               @id @default(autoincrement())
+  startAt   DateTime
+  status    AppointmentStatus @default(scheduled)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  doctorId  Int
+  userId    Int
+  user      Users             @relation(fields: [userId], references: [id])
+  doctor    Doctors           @relation(fields: [doctorId], references: [id])
 
   @@index([doctorId, startAt])
   @@index([userId, startAt])
 }
 
-model Users{
-  id Int @id @default(autoincrement()) 
-  name String @db.VarChar(255)
-  email String @unique @db.VarChar(255)
-  phone String @db.VarChar(255)
+model Users {
+  id           Int           @id @default(autoincrement())
+  name         String        @db.VarChar(255)
+  email        String        @unique @db.VarChar(255)
+  phone        String        @db.VarChar(255)
   appointments Appointment[]
 }
 
-model Doctors{
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(255)
-  email String @unique @db.VarChar(255)
-  phone String @db.VarChar(255)
+enum SpecialtyDoctor {
+  general_practitioner
+  cardiologist
+  dermatologist
+  endocrinologist
+  gastroenterologist
+  gynecologist
+  neurologist
+  oncologist
+  ophthalmologist
+  orthopedist
+  otolaryngologist
+  pediatrician
+  psychiatrist
+  psychologist
+  pulmonologist
+  rheumatologist
+  urologist
+}
+
+model Doctors {
+  id           Int           @id @default(autoincrement())
+  name         String        @db.VarChar(255)
+  specialty SpecialtyDoctor
+  email        String        @unique @db.VarChar(255)
+  phone        String        @db.VarChar(255)
   appointments Appointment[]
 }
