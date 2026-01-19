@@ -1,6 +1,24 @@
-import { Doctors, SpecialtyDoctor } from "../generated/prisma/index.js";
+import { Doctors } from "../generated/prisma/index.js";
 
-export interface DoctorsWhereParams{
+export type SpecialtyDoctor =
+    | "general_practitioner"
+    | "cardiologist"
+    | "dermatologist"
+    | "endocrinologist"
+    | "gastroenterologist"
+    | "gynecologist"
+    | "neurologist"
+    | "oncologist"
+    | "ophthalmologist"
+    | "orthopedist"
+    | "otolaryngologist"
+    | "pediatrician"
+    | "psychiatrist"
+    | "psychologist"
+    | "pulmonologist"
+    | "rheumatologist"
+    | "urologist";
+export interface DoctorsWhereParams {
     name?: {
         like?: string,
         equals?: string
@@ -10,7 +28,7 @@ export interface DoctorsWhereParams{
     doctorid?: number
 }
 
-export interface FindDoctorsParams{
+export interface FindDoctorsParams {
     where?: DoctorsWhereParams
     SortBy?: "name" | "specialty"
     order?: "asc" | "desc"
@@ -25,8 +43,8 @@ export interface CreateDoctorsAttributes {
     specialty: SpecialtyDoctor
 }
 
-export interface DoctorsReposityors{
-    find: () => Promise<Doctors>
+export interface DoctorsReposityors {
+    find: () => Promise<Doctors[]>
     findById: (id: number) => Promise<Doctors>
     create: (attributes: CreateDoctorsAttributes) => Promise<Doctors>
     updateById: (id: number, attributes: Partial<CreateDoctorsAttributes>) => Promise<Doctors | null>
